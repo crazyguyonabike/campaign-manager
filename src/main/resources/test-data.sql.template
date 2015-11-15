@@ -1,0 +1,1 @@
+INSERT INTO identified (identifier, messagetransport) VALUES ('123', '<insert a phone number here: +19999999999');
