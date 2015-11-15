@@ -7,7 +7,7 @@
   <artifactId>campaign</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
-  <name>Example Cart</name>
+  <name>Example Campaign</name>
 
   <properties>
     <jettyVersion>7.2.0.v20101020</jettyVersion>
