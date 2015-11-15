@@ -1,0 +1,6 @@
+sms.twilio.account.sid=
+sms.twilio.auth.token=
+sms.twilio.url=
+sms.twilio.number=
+
+google.api.key=
