@@ -4,3 +4,4 @@ sms.twilio.url=
 sms.twilio.number=
 
 google.api.key=
+campaign.directory=src/main/resources

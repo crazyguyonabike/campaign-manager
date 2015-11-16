@@ -1,0 +1,16 @@
+# DEFAULT CACHE REGION
+jcs.default=DC
+jcs.default.cacheattributes=org.apache.commons.jcs.engine.CompositeCacheAttributes
+jcs.default.cacheattributes.MaxObjects=500
+jcs.default.cacheattributes.MemoryCacheName=org.apache.commons.jcs.engine.memory.lru.LHMLRUMemoryCache
+ 
+# PRE-DEFINED CACHE REGIONS
+jcs.region.identifiedCache=DC
+jcs.region.identifiedCache.cacheattributes=org.apache.commons.jcs.engine.CompositeCacheAttributes
+jcs.region.identifiedCache.cacheattributes.MaxObjects=5000
+jcs.region.identifiedCache.cacheattributes.MemoryCacheName=org.apache.commons.jcs.engine.memory.lru.LHMLRUMemoryCache
+jcs.region.identifiedCache.elementattributes.MaxLifeSeconds=3600
+ 
+jcs.region.placeCache=DC
+jcs.region.placeCache.cacheattributes=org.apache.commons.jcs.engine.CompositeCacheAttributes
+jcs.region.placeCache.cacheattributes.MemoryCacheName=org.apache.commons.jcs.engine.memory.lru.LHMLRUMemoryCache

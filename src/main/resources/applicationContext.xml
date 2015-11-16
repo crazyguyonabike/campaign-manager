@@ -44,4 +44,15 @@
     <property name="entityManagerFactory" ref="entityManagerFactory"/>
   </bean>
 
+  <bean id="identifiedCache" class="org.apache.commons.jcs.JCS" factory-method="getInstance">
+    <constructor-arg>
+      <value>identifiedCache</value>
+    </constructor-arg>
+  </bean>
+
+  <bean id="placeCache" class="org.apache.commons.jcs.JCS" factory-method="getGroupCacheInstance">
+    <constructor-arg>
+      <value>placeCache</value>
+    </constructor-arg>
+  </bean>
 </beans>
