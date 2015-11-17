@@ -17,6 +17,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import com.javadocmd.simplelatlng.LatLng;
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
+
+import com.example.campaign.domain.Place;
 
 @Service
 public class CachingCampaignService implements CampaignService, InitializingBean, DisposableBean {
@@ -24,6 +28,9 @@ public class CachingCampaignService implements CampaignService, InitializingBean
 
     @Autowired
     private GroupCacheAccess<String, LatLng> placeCache;
+
+    @Autowired
+    private PlaceService placeService;
 
     @Value("${campaign.directory}")
     private String campaignDirectory;
@@ -34,6 +41,31 @@ public class CachingCampaignService implements CampaignService, InitializingBean
 
     public void destroy() {
         placeCache.dispose();
+    }
+
+    public Place getNearestPlace(LatLng location, Double multiplier) {
+        Place place = null;
+        boolean foundPlace = false;
+
+        for (String groupName : placeCache.getGroupNames()) {
+            logger.debug(String.format("processing %s group", groupName));
+            for (String placeKey : placeCache.getGroupKeys(groupName)) {
+                LatLng placeLocation = placeCache.getFromGroup(placeKey, groupName);
+                double distance = LatLngTool.distance(location, placeLocation, LengthUnit.MILE);
+                if (distance < 1.0*multiplier) {
+                    // naively return the first place found
+                    place = placeService.getPlace(placeKey);
+                    if (place != null) {
+                        place.setDistance(distance);
+                        foundPlace = true;
+                        break;
+                    }
+                }
+            }
+            if (foundPlace)
+                break;
+        }
+        return place;
     }
 
     private void initializePlaceCache(GroupCacheAccess<String, LatLng> placeCache) {
@@ -58,6 +90,6 @@ public class CachingCampaignService implements CampaignService, InitializingBean
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-        }            
+        }
     }
-}    
+}

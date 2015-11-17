@@ -4,7 +4,9 @@ import org.joda.time.Instant;
 
 import com.javadocmd.simplelatlng.LatLng;
 
-public class TimestampedLocation { 
+import java.io.Serializable;
+
+public class TimestampedLocation implements Serializable {
     private LatLng location;
     private Instant timestamp;
 
