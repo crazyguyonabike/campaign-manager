@@ -14,13 +14,13 @@ public class TimestampedLocation implements Serializable {
         timestamp = new Instant();
         this.location = location;
     }
-        
+
     public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 
     public Instant getTimestamp() {
-        return timestamp;
+        return this.timestamp;
     }
 
     public void setLocation(LatLng location) {
@@ -28,8 +28,6 @@ public class TimestampedLocation implements Serializable {
     }
 
     public LatLng getLocation() {
-        return location;
+        return this.location;
     }
 }
-            
-    
