@@ -3,6 +3,7 @@ package com.example.campaign.domain;
 public class Place {
     String name;
     String address;
+    String phone;
     double distance;
 
     public String getName() {
@@ -19,6 +20,14 @@ public class Place {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public double getDistance() {
