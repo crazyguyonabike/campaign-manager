@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.javadocmd.simplelatlng.LatLng;
 
 import com.example.campaign.domain.Identified;
+import com.example.campaign.domain.Place;
 import com.example.campaign.repository.IdentifiedRepository;
 import com.example.campaign.service.IdentifiedService;
 
@@ -22,6 +23,12 @@ public class SimpleCompositeCampaignManager implements CampaignManager {
     @Autowired
     private IdentifiedService identifiedService;
 
+    @Autowired
+    private CampaignService campaignService;
+
+    @Autowired
+    private PlaceMessageTransportService placeMessageTransportService;
+
     @Async
     public void manage(String id, String location) {
         logger.debug(String.format("managing id: %s with location %s", id, location));
@@ -30,6 +37,9 @@ public class SimpleCompositeCampaignManager implements CampaignManager {
         String [] parts = location.split(",");
         LatLng latlng = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
         Double multiplier = identifiedService.handleLocatedIdentified(identified, latlng);
-
+        Place place = campaignService.getNearestPlace(latlng, multiplier);
+        if (place != null) {
+            placeMessageTransportService.sendPlaceMessage(identified.getMessageTransport(), place);
+        }
     }
 }
