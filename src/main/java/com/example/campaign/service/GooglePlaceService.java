@@ -1,5 +1,7 @@
 package com.example.campaign.service;
 
+import java.io.StringReader;
+
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
 import org.w3c.dom.*;
+import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -61,7 +64,7 @@ public class GooglePlaceService implements PlaceService, InitializingBean, Dispo
         String entity = client.target(urlString).request().get(String.class);
         if (StringUtils.isNotEmpty(entity)) {
             try {
-                Document document = documentBuilder.parse(entity);
+                Document document = documentBuilder.parse(new InputSource(new StringReader(entity)));
                 if (xPathExpressionStatus.evaluate(document, XPathConstants.STRING).equals("OK")) {
                     place = new Place();
                     place.setName((String)xPathExpressionName.evaluate(document, XPathConstants.STRING));
@@ -79,5 +82,4 @@ public class GooglePlaceService implements PlaceService, InitializingBean, Dispo
     public void destroy() {
         client.close();
     }
-
 }
