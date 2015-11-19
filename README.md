@@ -24,5 +24,5 @@ a curl command like:
 
 might cause something to be texted to YOUR phone number.
 
-The test data (dairyqueen.campaign) is all the Dairy Queen's around
+The test data (src/main/resources/dairyqueen.campaign) is all the Dairy Queen's around
 the Chicago area. A degree of movement is about 69 miles.
