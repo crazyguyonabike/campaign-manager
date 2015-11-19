@@ -35,11 +35,19 @@ public class SimpleCompositeCampaignManager implements CampaignManager {
         Identified identified = identifiedRepository.findByIdentifier(id);
         logger.debug(String.format("found identified[%d] %s with message transport %s", identified.getId(), identified.getIdentifier(), identified.getMessageTransport()));
         String [] parts = location.split(",");
-        LatLng latlng = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
-        Double multiplier = identifiedService.handleLocatedIdentified(identified, latlng);
-        Place place = campaignService.getNearestPlace(latlng, multiplier);
-        if (place != null) {
-            placeMessageTransportService.sendPlaceMessage(identified.getMessageTransport(), place);
+        LatLng latlng = null;
+        try {
+            latlng = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        if (latlng != null) {
+            Double multiplier = identifiedService.handleLocatedIdentified(identified, latlng);
+            Place place = campaignService.getNearestPlace(latlng, multiplier);
+            if (place != null) {
+                placeMessageTransportService.sendPlaceMessage(identified.getMessageTransport(), place);
+            }
         }
     }
 }
